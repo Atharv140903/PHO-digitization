@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cleaning</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body>
+    <h1>Cleaning Form</h1>
+    <div class="container">
+      <div class="row mx-0 justify-content-center">
+        <div class="col-md-7 col-lg-5 px-lg-2 col-xl-4 px-xl-0 px-xxl-3">
+          <form
+            method="POST"
+            class="w-100 rounded-1 p-4 border bg-white"
+            action="/app/api/cleaning/"
+            enctype="multipart/form-data"
+          >
+            {% csrf_token %}
+            <input type="hidden" id="worker_id" name="worker_id" value="{{ worker_id }}">
+
+            <label class="d-block mb-4">
+              <span class="form-label d-block">Worker Name</span>
+              <input
+                name="worker_name"
+                type="text"
+                class="form-control"
+                placeholder=""
+                readonly
+              />
+            </label>
+            <label class="d-block mb-4">
+              <span class="form-label d-block">Student Name</span>
+              <input
+                name="name_of_student"
+                type="text"
+                class="form-control"
+                placeholder=""
+              />
+            </label>
+
+            <label class="d-block mb-4">
+              <span class="form-label d-block">Roll Number</span>
+              <input
+                name="roll_number"
+                type="text"
+                class="form-control"
+                placeholder=""
+              />
+            </label>
+
+            <div class="row">
+              <label class="col-6 d-block mb-4">
+                <span class="form-label d-block">Hostel</span>
+                <input
+                  name="hostel"
+                  type="text"
+                  class="form-control"
+                  placeholder=""
+                />
+              </label>
+
+              <label class="col-6 d-block mb-4">
+                <span class="form-label d-block">Room Number</span>
+                <input
+                  name="room_number"
+                  type="text"
+                  class="form-control"
+                  placeholder=""
+                />
+              </label>
+            </div>
+
+            <label class="d-block mb-4">
+              <span class="form-label d-block">Wing</span>
+              <input
+                name="wing"
+                type="text"
+                class="form-control"
+                placeholder=""
+              />
+            </label>
+
+            <label class="d-block mb-4">
+              <span>Cleaning Task</span>
+              <select
+                name="cleaning_task"
+                class="form-select"
+                aria-label="Select task"
+              >
+                <option selected>Select task</option>
+                <option value="room">Room</option>
+                <option value="washroom">Washroom</option>
+                <option value="corridor">Corridor</option>
+              </select>
+            </label>
+
+            <label class="d-block mb-4">
+              <span class="form-label d-block">Description</span>
+              <textarea
+                name="task_description"
+                class="form-control"
+                rows="3"
+                placeholder="Task Description / Feedback"
+              ></textarea>
+            </label>
+
+            <div class="mb-3">
+              <button type="submit" class="btn btn-primary px-3 rounded-3">
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"
+  ></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    var worker_id = '{{worker_id}}';
+
+    $(document).ready(function () {
+      
+      var apiUrl = `/app/api/worker/${worker_id}/`;
+      
+      $.get(apiUrl, function (data) {
+        $('[name="worker_name"]').val(data.worker_name);
+      }).fail(function () {
+        alert("Worker not found");
+      });
+    });
+  </script>
+</html>
